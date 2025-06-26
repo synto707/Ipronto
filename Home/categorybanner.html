@@ -1,0 +1,514 @@
+<meta>
+
+<title>
+    Leisure &amp; Entertainment Experience
+</title>
+<script src="https://cdn.tailwindcss.com">
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+        text-align: center;
+    }
+
+    .counter-info {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .counter-info strong {
+        font-weight: bold;
+        font-size: 20px;
+        margin: 0 5px;
+    }
+
+    .search-bar {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        position: relative;
+        margin-top: 10px;
+    }
+
+    .input-box {
+        position: relative;
+    }
+
+    .input-field {
+        padding: 10px 12px 10px 35px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #F4F7FB url('https://cdn-icons-png.flaticon.com/512/622/622669.png') no-repeat 10px center;
+        background-size: 16px;
+        font-size: 14px;
+        width: 240px;
+        color: #333;
+    }
+
+    .action-button {
+        padding: 10px 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        background-color: #FFC107;
+        color: black;
+        cursor: pointer;
+    }
+
+    .filter-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .filter-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .filter-popup {
+        position: fixed;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 500px;
+        background-color: white;
+        border-radius: 16px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        display: none;
+        z-index: 1000;
+    }
+
+    .filter-popup input[type="date"],
+    .filter-popup input[type="text"] {
+        width: 48%;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+
+    .filter-popup input[type="range"] {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .price-fields {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .price-fields input {
+        width: 48%;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+    }
+
+    .time-period-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+
+    .time-period-buttons button {
+        padding: 6px 12px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .popup-actions {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    .popup-actions button {
+        flex: 1;
+        padding: 12px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+    .search-btn {
+        background-color: #FFC107;
+        border-bottom-left-radius: 16px;
+    }
+
+    .clear-btn {
+        background-color: #3A3A3A;
+        color: white;
+        border-bottom-right-radius: 16px;
+    }
+
+    .popup-close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .tag-display {
+        margin-top: 20px;
+        background-color: #E50914;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 20px;
+        padding: 8px 16px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .tag-close {
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 18px;
+        color: white;
+    }
+
+    .loading {
+        color: #666;
+        font-style: italic;
+    }
+</style>
+<h4 class="text-xl font-bold">
+    Book Leisure &amp; Entertainment Experience
+</h4>
+<p class="text-sm text-gray-500 counter-info">
+    <strong id="destination_count" class="loading">
+        ...
+    </strong>
+    Exciting Destinations.
+    <strong id="experience_count" class="loading">
+        ...
+    </strong>
+    Leisure &amp; Entertainment Experiences
+</p>
+<div id="locationTag" class="tag-display">
+    <span id="locationText">
+    </span>
+    <span class="tag-close" onclick="removeSearchTag()">
+        ×
+    </span>
+</div>
+<div class="search-bar">
+    <div class="input-box">
+        <input id="searchInput" class="input-field" type="text" placeholder="Event name, Performer, Destination, Tag">
+    </div>
+    <div class="input-box location-box">
+        <input id="1096904208" class="input-field" type="text" placeholder="City, State, Zip code, Country">
+    </div>
+    <button class="action-button" onclick="handleSearch()">
+        Search
+    </button>
+    <button class="action-button filter-button" onclick="toggleFilter()">
+        <img class="filter-icon" src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" alt="filter icon">
+        Filter
+    </button>
+    <div id="filterPopup" class="filter-popup">
+        <span class="popup-close" onclick="toggleFilter()">
+            ×
+        </span>
+        <div style="display: flex; gap: 10px;">
+            <input type="date" value="2025-06-25">
+            <input type="date" value="2026-06-24">
+        </div>
+        <input type="range" min="0" max="1000" step="10">
+        <div class="price-fields">
+            <input type="text" placeholder="$0">
+            <input type="text" placeholder="$0">
+        </div>
+        <p>
+            <strong>
+                Personalized View
+            </strong>
+        </p>
+        <p>
+            Select the Time Period
+        </p>
+        <div class="time-period-buttons">
+            <button>
+                All
+            </button>
+            <button>
+                Today
+            </button>
+            <button>
+                7 Days
+            </button>
+            <button>
+                30 Days
+            </button>
+            <button>
+                90 Days
+            </button>
+        </div>
+        <div class="popup-actions">
+            <button class="search-btn">
+                Search
+            </button>
+            <button class="clear-btn">
+                Clear all
+            </button>
+        </div>
+    </div>
+</div>
+<div id="card-container" class="flex flex-wrap gap-x-6 gap-y-6 justify-center p-6 mt-6">
+    <!-- Cards -->
+    <div class="flex flex-col items-center" data-id="professionalsports">
+        <div class="relative bg-gray-100 rounded-lg p-4 w-24 text-center shadow">
+            <span class="absolute top-1 left-1 w-3 h-3 bg-red-600 rounded-full">
+            </span>
+            <input type="checkbox" class="absolute top-1 right-1">
+            <img src="https://img.icons8.com/ios-filled/30/FF0000/basketball.png" class="mx-auto mb-2">
+            <div class="text-xs font-semibold leading-tight category-name">
+                Sports
+            </div>
+        </div>
+        <div class="count text-center text-sm font-bold mt-1 loading">
+            ...
+        </div>
+    </div>
+    <div class="flex flex-col items-center" data-id="musicandconcerts">
+        <div class="relative bg-gray-100 rounded-lg p-4 w-24 text-center shadow">
+            <span class="absolute top-1 left-1 w-3 h-3 bg-pink-500 rounded-full">
+            </span>
+            <input type="checkbox" class="absolute top-1 right-1">
+            <img src="https://img.icons8.com/ios-filled/30/FF69B4/musical-notes.png" class="mx-auto mb-2">
+            <div class="text-xs font-semibold leading-tight">
+                Music
+            </div>
+        </div>
+        <div class="count text-center text-sm font-bold mt-1 loading">
+            ...
+        </div>
+    </div>
+    <div class="flex flex-col items-center" data-id="liveshows">
+        <div class="relative bg-gray-100 rounded-lg p-4 w-24 text-center shadow">
+            <span class="absolute top-1 left-1 w-3 h-3 bg-blue-700 rounded-full">
+            </span>
+            <input type="checkbox" class="absolute top-1 right-1">
+            <img src="https://img.icons8.com/ios-filled/30/0000CD/microphone.png" class="mx-auto mb-2">
+            <div class="text-xs font-semibold leading-tight">
+                Live Shows
+            </div>
+        </div>
+        <div class="count text-center text-sm font-bold mt-1 loading">
+            ...
+        </div>
+    </div>
+    <div class="flex flex-col items-center" data-id="tours">
+        <div class="relative bg-gray-100 rounded-lg p-4 w-24 text-center shadow">
+            <span class="absolute top-1 left-1 w-3 h-3 bg-black rounded-full">
+            </span>
+            <input type="checkbox" class="absolute top-1 right-1">
+            <img src="https://img.icons8.com/ios-filled/30/000000/map-marker.png" class="mx-auto mb-2">
+            <div class="text-xs font-semibold leading-tight">
+                Tours
+            </div>
+        </div>
+        <div class="count text-center text-sm font-bold mt-1 loading">
+            ...
+        </div>
+    </div>
+    <div class="flex flex-col items-center" data-id="adventures">
+        <div class="relative bg-gray-100 rounded-lg p-4 w-24 text-center shadow">
+            <span class="absolute top-1 left-1 w-3 h-3 bg-green-700 rounded-full">
+            </span>
+            <input type="checkbox" class="absolute top-1 right-1">
+            <img src="https://img.icons8.com/ios-filled/30/006400/trekking.png" class="mx-auto mb-2">
+            <div class="text-xs font-semibold leading-tight">
+                Adventure
+            </div>
+        </div>
+        <div class="count text-center text-sm font-bold mt-1 loading">
+            ...
+        </div>
+    </div>
+    <div class="flex flex-col items-center" data-id="activities">
+        <div class="relative bg-gray-100 rounded-lg p-4 w-24 text-center shadow">
+            <span class="absolute top-1 left-1 w-3 h-3 bg-orange-500 rounded-full">
+            </span>
+            <input type="checkbox" class="absolute top-1 right-1">
+            <img src="https://img.icons8.com/ios-filled/30/FFA500/bicycle.png" class="mx-auto mb-2">
+            <div class="text-xs font-semibold leading-tight">
+                Activities
+            </div>
+        </div>
+        <div class="count text-center text-sm font-bold mt-1 loading">
+            ...
+        </div>
+    </div>
+    <div class="flex flex-col items-center" data-id="others">
+        <div class="relative bg-gray-100 rounded-lg p-4 w-24 text-center shadow">
+            <span class="absolute top-1 left-1 w-3 h-3 bg-red-600 rounded-full">
+            </span>
+            <input type="checkbox" class="absolute top-1 right-1">
+            <img src="https://img.icons8.com/ios-filled/30/8B0000/castle.png" class="mx-auto mb-2">
+            <div class="text-xs font-semibold leading-tight">
+                Others
+            </div>
+        </div>
+        <div class="count text-center text-sm font-bold mt-1 loading">
+            ...
+        </div>
+    </div>
+    <div class="flex flex-col items-center" data-id="upcomingEvents">
+        <div class="relative bg-gray-100 rounded-lg p-4 w-24 text-center shadow">
+            <img src="https://img.icons8.com/ios-filled/30/696969/planner.png" class="mx-auto mb-2">
+            <div class="text-xs font-semibold leading-tight">
+                Upcoming
+            </div>
+        </div>
+        <div class="count text-center text-sm font-bold mt-1 loading">
+            ...
+        </div>
+    </div>
+</div>
+<div id="event-results" class="mt-10 px-6 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+</div>
+<script>
+    const GLOBAL_COUNT_URL = "https://api.ipronto.com/api/v3/statistics/eventsCategoryCount?city=&location=&nearBy=&searchText=&fromDate=1750231820000&toDate=1781681420000&landingPage=&categories=&destinationId=&limit=10&page=1&bounds={%22boundCenter%22:{%22lat%22:40.87344192163164,%22lng%22:-74.24690851507893},%22boundZoom%22:1,%22lngW%22:-180,%22latS%22:-53.31003657149456,%22lngE%22:180,%22latN%22:82.07483916635272}&priceRange=&createdSince=2025-06-17&upcomingEvents=7&ipAddress=49.47.219.251";
+    const CANADA_COUNT_URL = "https://api.ipronto.com/api/v3/statistics/eventsCategoryCount?city=Canada&location=%7B%22lat%22:56.130366,%22lng%22:-106.346771%7D&searchText=&categories=&fromDate=1750654413044&toDate=1782086400000&landingPage=&destinationId=&limit=10&bounds=%7B%22boundCenter%22:%7B%22lat%22:58.695433501291085,%22lng%22:-96.00000000000001%7D,%22boundZoom%22:3,%22lngW%22:138.4921875,%22latS%22:32.35434347166949,%22lngE%22:29.50781249999998,%22latN%22:73.76116017883977%7D&page=1&priceRange=&createdSince=2025-06-22&upcomingEvents=7";
+    let currentLocation = null;
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchData(GLOBAL_COUNT_URL);
+        setupCheckboxListeners();
+        document.getElementById("1096904208").addEventListener("keypress", function (e) {
+            if (e.key === "Enter") handleSearch();
+        });
+    });
+    async function handleSearch() {
+        const locationValue = document.getElementById("1096904208").value.trim();
+        const locationTag = document.getElementById("locationTag");
+        const locationText = document.getElementById("locationText");
+        showLoadingStates();
+        if (locationValue) {
+            locationTag.style.display = "flex";
+            locationText.textContent = locationValue;
+            currentLocation = locationValue.toLowerCase();
+            if (currentLocation === "canada") {
+                await fetchData(CANADA_COUNT_URL);
+            } else {
+                await fetchData(GLOBAL_COUNT_URL);
+            }
+        } else {
+            locationTag.style.display = "none";
+            currentLocation = null;
+            await fetchData(GLOBAL_COUNT_URL);
+        }
+    }
+    function removeSearchTag() {
+        const locationTag = document.getElementById("locationTag");
+        locationTag.style.display = "none";
+        document.getElementById("1096904208").value = "";
+        currentLocation = null;
+        handleSearch();
+    }
+    async function fetchData(url) {
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            updateCountsAndCategories(data);
+            await fetchFilteredEvents([], url === CANADA_COUNT_URL);
+        } catch (error) {
+            console.error("Failed to fetch data:", error);
+            showErrorState();
+        }
+    }
+    function updateCountsAndCategories(data) {
+        if (data.destination_count !== undefined) {
+            document.getElementById("destination_count").textContent = data.destination_count.toLocaleString();
+            document.getElementById("destination_count").classList.remove("loading");
+        }
+        if (data.experience_count !== undefined) {
+            document.getElementById("experience_count").textContent = data.experience_count.toLocaleString();
+            document.getElementById("experience_count").classList.remove("loading");
+        }
+        const categories = [...(data.categories || []), ...(data.personalised || [])];
+        categories.forEach(cat => {
+            const card = document.querySelector(`[data-id="${cat.category_id}"]`);
+            if (card) {
+                const countEl = card.querySelector(".count");
+                const nameEl = card.querySelector(".category-name");
+                if (countEl) {
+                    countEl.textContent = (cat.counts || 0).toLocaleString();
+                    countEl.classList.remove("loading");
+                }
+                if (nameEl && cat.name) nameEl.textContent = cat.name;
+            }
+        });
+    }
+    async function fetchFilteredEvents(selectedCategories, isCanada = false) {
+        const baseParams = isCanada ?
+            "city=Canada&location=%7B%22lat%22:56.130366,%22lng%22:-106.346771%7D&bounds=%7B%22boundCenter%22:%7B%22lat%22:58.695433501291085,%22lng%22:-96.00000000000001%7D,%22boundZoom%22:3,%22lngW%22:138.4921875,%22latS%22:32.35434347166949,%22lngE%22:29.50781249999998,%22latN%22:73.76116017883977%7D" :
+            "city=&location=&bounds=%7B%22boundCenter%22:%7B%22lat%22:40.87344192163164,%22lng%22:-74.24690851507893%7D,%22boundZoom%22:1,%22lngW%22:-180,%22latS%22:-53.31003657149456,%22lngE%22:180,%22latN%22:82.07483916635272%7D";
+        const url = `https://api.ipronto.com/api/v3/events/searchAll?${baseParams}${selectedCategories.length ? `&categories=${selectedCategories.join(",")}` : ""}&fromDate=1750319574000&toDate=1781769174000&limit=10`;
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            displayEvents(data.events || []);
+        } catch (error) {
+            console.error("Failed to fetch events:", error);
+            document.getElementById("event-results").innerHTML =
+                "<p class='text-center col-span-full text-red-600 font-semibold'>⚠️ Failed to load events</p>";
+        }
+    }
+    function setupCheckboxListeners() {
+        document.querySelectorAll("#card-container input[type='checkbox']").forEach(cb => {
+            cb.addEventListener("change", () => {
+                const selectedCategories = Array.from(
+                    document.querySelectorAll("#card-container input[type='checkbox']:checked")
+                ).map(box => box.closest("[data-id]").getAttribute("data-id"));
+                fetchFilteredEvents(selectedCategories, currentLocation === "canada");
+            });
+        });
+    }
+    function showLoadingStates() {
+        document.getElementById("destination_count").textContent = "...";
+        document.getElementById("destination_count").className = "loading";
+        document.getElementById("experience_count").textContent = "...";
+        document.getElementById("experience_count").className = "loading";
+        document.querySelectorAll(".count").forEach(el => {
+            el.textContent = "...";
+            el.className = "count text-center text-sm font-bold mt-1 loading";
+        });
+    }
+    function showErrorState() {
+        document.querySelectorAll(".loading").forEach(el => {
+            el.textContent = "Error loading";
+            el.style.color = "red";
+        });
+    }
+    function displayEvents(events) {
+        const container = document.getElementById("event-results");
+        container.innerHTML = events.length ?
+            events.map(event => `
+        <div class="border rounded-lg p-4 shadow bg-white">
+          <h3 class="text-md font-bold mb-1">${event.title || "Untitled Event"}</h3>
+          <p class="text-sm mb-1">${event.location || "No location"}</p>
+          <p class="text-sm text-gray-600">${new Date(event.start_date).toLocaleDateString()}</p>
+        </div>
+      `).join("") :
+            "<p class='text-center col-span-full text-red-600 font-semibold'>No events found</p>";
+    }
+    function toggleFilter() {
+        const popup = document.getElementById("filterPopup");
+        popup.style.display = popup.style.display === "block" ? "none" : "block";
+    }
+</script>
